@@ -4,6 +4,8 @@ export const states = {
   MOVE_BACKWARD: 2,
   ROTATE_RIGHT: 3,
   ROTATE_LEFT: 4,
+  BRAKING: 5,
+  BRAKING_BACK: 6,
 }
 
 class State {
@@ -44,7 +46,7 @@ export class MoveForward extends State {
   }
 
   handleInput(input) {
-    if (input === 'RELEASE up') this.player.setState(states.STANDING);
+    if (input === 'RELEASE up') this.player.setState(states.BRAKING);
   }
 }
 
@@ -60,7 +62,7 @@ export class MoveBackward extends State {
   }
 
   handleInput(input) {
-    if (input === 'RELEASE down') this.player.setState(states.STANDING);
+    if (input === 'RELEASE down') this.player.setState(states.BRAKING_BACK);
   }
 }
 
@@ -95,5 +97,43 @@ export class RotateLeft extends State {
 
   handleInput(input) {
     if (input === 'RELEASE left') this.player.setState(states.STANDING);
+  }
+}
+
+export class Braking extends State {
+  constructor(player) {
+    super('BRAKING');
+    this.player = player;
+  }
+  
+  enter() {
+    this.player.frameY = 0;
+    this.player.speed = 2;
+    this.player.angleStep = 0;
+  }
+
+  handleInput(input) {
+    if (input === 'PRESS right') this.player.setState(states.ROTATE_RIGHT);
+    else if (input === 'PRESS left') this.player.setState(states.ROTATE_LEFT);
+    else if (this.player.speed === 0) this.player.setState(states.STANDING);
+  }
+}
+
+export class BrakingBack extends State {
+  constructor(player) {
+    super('BRAKING');
+    this.player = player;
+  }
+  
+  enter() {
+    this.player.frameY = 0;
+    this.player.speed = -1;
+    this.player.angleStep = 0;
+  }
+
+  handleInput(input) {
+    if (input === 'PRESS right') this.player.setState(states.ROTATE_RIGHT);
+    else if (input === 'PRESS left') this.player.setState(states.ROTATE_LEFT);
+    else if (this.player.speed === 0) this.player.setState(states.STANDING);
   }
 }

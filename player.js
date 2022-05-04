@@ -1,10 +1,10 @@
-import {Standing, MoveForward, MoveBackward, RotateRight, RotateLeft} from './state.js'
+import {Standing, MoveForward, MoveBackward, RotateRight, RotateLeft, Braking, BrakingBack} from './state.js'
 
 export default class Player {
   constructor(gameWidth, gameHeight) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
-    this.states = [new Standing(this), new MoveForward(this), new MoveBackward(this), new RotateRight(this), new RotateLeft(this),];
+    this.states = [new Standing(this), new MoveForward(this), new MoveBackward(this), new RotateRight(this), new RotateLeft(this), new Braking(this), new BrakingBack(this)];
     this.currientState = this.states[0];
     this.image = tank;
     this.width = 60;
@@ -14,10 +14,12 @@ export default class Player {
     this.frameX = 0;
     this.frameY = 0;
     this.speed = 0;
-    this.maxSpeed = 1;
+    this.speedBack = 0;
+    this.maxSpeed = 2;
     this.angleDeg = -(90);
     this.angleStep = 0;
     this.position = [this.x, this.y];
+    this.weight = 0.02;
   }
 
   draw(context) {
@@ -30,7 +32,6 @@ export default class Player {
     //анимация
     this.frameX++;
     if (this.frameX > 1) this.frameX = 0;
-
     
     //вектор движения
     this.angleDeg += this.angleStep;
@@ -38,6 +39,22 @@ export default class Player {
     this.x = (this.x + Math.cos(angle) * this.speed);
     this.y = (this.y + Math.sin(angle) * this.speed);
     //бля сработало T_T
+
+
+    //торможение и занос
+    if (this.currientState === this.states[5] || this.currientState === this.states[3] || this.currientState === this.states[4]) {
+      this.speed -= this.weight;
+      if (this.speed <= 0) this.speed = 0;
+    }
+    if (this.currientState === this.states[6]) {
+      this.speed += this.weight;
+      if (this.speed >= 0) this.speed = 0;
+    }
+
+
+
+
+
 
     // удержание в окне
     if (this.x < 0) this.x = 0;
@@ -50,5 +67,9 @@ export default class Player {
   setState(state) {
     this.currientState = this.states[state];
     this.currientState.enter();
+  }
+
+  isStanding() {
+    return this.speed === 0
   }
 }
