@@ -73,7 +73,7 @@ export class RotateRight extends State {
   }
   
   enter() {
-    this.player.frameY = 2;
+    this.player.frameY = 3;
     this.player.angleStep = 0.3;
     if (this.player.angleDeg > 359) this.player.angleDeg = 0;
   }
@@ -90,7 +90,7 @@ export class RotateLeft extends State {
   }
   
   enter() {
-    this.player.frameY = 3;
+    this.player.frameY = 2;
     this.player.angleStep = -0.3;
     if (this.player.angleDeg < -359) this.player.angleDeg = 0;
   }
@@ -108,8 +108,6 @@ export class Braking extends State {
   
   enter() {
     this.player.frameY = 0;
-    this.player.speed = 2;
-    this.player.angleStep = 0;
   }
 
   handleInput(input) {
@@ -121,19 +119,15 @@ export class Braking extends State {
 
 export class BrakingBack extends State {
   constructor(player) {
-    super('BRAKING');
+    super('BRAKING BACK');
     this.player = player;
   }
   
   enter() {
     this.player.frameY = 0;
-    this.player.speed = -1;
-    this.player.angleStep = 0;
   }
 
   handleInput(input) {
-    if (input === 'PRESS right') this.player.setState(states.ROTATE_RIGHT);
-    else if (input === 'PRESS left') this.player.setState(states.ROTATE_LEFT);
-    else if (this.player.speed === 0) this.player.setState(states.STANDING);
+    if (this.player.speed === 0) this.player.setState(states.STANDING);
   }
 }
