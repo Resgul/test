@@ -18,12 +18,12 @@ export class Standing extends State {
   
   enter() {
     this.player.frameY = 0;
-
+    this.player.speed = 0;
   }
 
   handleInput(input) {
     if (input === 'PRESS up') this.player.setState(states.MOVE_FORWARD)
-    if (input === 'PRESS down') this.player.setState(states.MOVE_BACKWARD)
+    else if (input === 'PRESS down') this.player.setState(states.MOVE_BACKWARD)
   }
 }
 
@@ -35,6 +35,7 @@ export class MoveForward extends State {
   
   enter() {
     this.player.frameY = 1;
+    this.player.speed += this.player.maxSpeed;
   }
 
   handleInput(input) {
@@ -50,6 +51,7 @@ export class MoveBackward extends State {
   
   enter() {
     this.player.frameY = 1;
+    this.player.speed += -this.player.maxSpeed * 0.5;
   }
 
   handleInput(input) {
