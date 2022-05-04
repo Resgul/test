@@ -2,6 +2,8 @@ export const states = {
   STANDING: 0,
   MOVE_FORWARD: 1,
   MOVE_BACKWARD: 2,
+  ROTATE_RIGHT: 3,
+  ROTATE_LEFT: 4,
 }
 
 class State {
@@ -19,11 +21,14 @@ export class Standing extends State {
   enter() {
     this.player.frameY = 0;
     this.player.speed = 0;
+    this.player.angleStep = 0;
   }
 
   handleInput(input) {
-    if (input === 'PRESS up') this.player.setState(states.MOVE_FORWARD)
-    else if (input === 'PRESS down') this.player.setState(states.MOVE_BACKWARD)
+    if (input === 'PRESS up') this.player.setState(states.MOVE_FORWARD);
+    else if (input === 'PRESS down') this.player.setState(states.MOVE_BACKWARD);
+    else if (input === 'PRESS right') this.player.setState(states.ROTATE_RIGHT);
+    else if (input === 'PRESS left') this.player.setState(states.ROTATE_LEFT);
   }
 }
 
@@ -56,5 +61,39 @@ export class MoveBackward extends State {
 
   handleInput(input) {
     if (input === 'RELEASE down') this.player.setState(states.STANDING);
+  }
+}
+
+export class RotateRight extends State {
+  constructor(player) {
+    super('ROTATE RIGHT');
+    this.player = player;
+  }
+  
+  enter() {
+    this.player.frameY = 2;
+    this.player.angleStep = 0.3;
+    if (this.player.angleDeg > 359) this.player.angleDeg = 0;
+  }
+
+  handleInput(input) {
+    if (input === 'RELEASE right') this.player.setState(states.STANDING);
+  }
+}
+
+export class RotateLeft extends State {
+  constructor(player) {
+    super('ROTATE LEFT');
+    this.player = player;
+  }
+  
+  enter() {
+    this.player.frameY = 3;
+    this.player.angleStep = -0.3;
+    if (this.player.angleDeg < -359) this.player.angleDeg = 0;
+  }
+
+  handleInput(input) {
+    if (input === 'RELEASE left') this.player.setState(states.STANDING);
   }
 }

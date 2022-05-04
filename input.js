@@ -9,6 +9,12 @@ export default class InputHandler {
         case "ArrowDown":
           this.lastKey = "PRESS down";
           break;
+        case "ArrowRight":
+          this.lastKey = "PRESS right";
+          break;
+        case "ArrowLeft":
+          this.lastKey = "PRESS left";
+          break;
       }
     })
 
@@ -19,8 +25,14 @@ export default class InputHandler {
           break;
         case "ArrowDown":
           this.lastKey = "RELEASE down";
-          break;  
-      }
+          break;
+        case "ArrowRight":
+          this.lastKey = "RELEASE right";
+          break;
+        case "ArrowLeft":
+          this.lastKey = "RELEASE left";
+          break;
+      }    
     })
   }
 }
