@@ -6,7 +6,5 @@ export function drawStatusText(context, input, player) {
   context.fillText('Speed: ' + (Math.floor(player.speed*100)/100), player.x-40, player.y-30);
   context.fillText('Angle: ' + Math.floor(-player.angleDeg), player.x-40, player.y-50);
   context.font = 'bold 20px Helvetica ';
-  context.fillText('Упрвление на стрелки:', 20, 90);
-  context.fillText('Повороты влево / вправо', 20, 120);
-  context.fillText('Движение с сохранением вектора', 20, 150);
+  context.fillText('Упрвление на стрелки', 20, 90);
 }
