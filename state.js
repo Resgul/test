@@ -47,6 +47,9 @@ export class MoveForward extends State {
 
   handleInput(input) {
     if (input === 'RELEASE up') this.player.setState(states.BRAKING);
+    else if (input === 'PRESS down') this.player.setState(states.MOVE_BACKWARD);
+    else if (input === 'PRESS right') this.player.setState(states.ROTATE_RIGHT);
+    else if (input === 'PRESS left') this.player.setState(states.ROTATE_LEFT);
   }
 }
 
@@ -75,11 +78,12 @@ export class RotateRight extends State {
   enter() {
     this.player.frameY = 3;
     this.player.angleStep = 0.3;
-    if (this.player.angleDeg > 359) this.player.angleDeg = 0;
   }
 
   handleInput(input) {
     if (input === 'RELEASE right') this.player.setState(states.STANDING);
+    if (input === 'PRESS up') this.player.setState(states.MOVE_FORWARD);
+    if (input === 'PRESS down') this.player.setState(states.MOVE_BACKWARD);
   }
 }
 
@@ -92,11 +96,12 @@ export class RotateLeft extends State {
   enter() {
     this.player.frameY = 2;
     this.player.angleStep = -0.3;
-    if (this.player.angleDeg < -359) this.player.angleDeg = 0;
   }
 
   handleInput(input) {
     if (input === 'RELEASE left') this.player.setState(states.STANDING);
+    if (input === 'PRESS up') this.player.setState(states.MOVE_FORWARD);
+    if (input === 'PRESS down') this.player.setState(states.MOVE_BACKWARD);
   }
 }
 
