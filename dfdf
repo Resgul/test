@@ -1,0 +1,53 @@
+[33mcommit 5cedad522f6108b74707622ffddab18c1f405ca4[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: ResGul <reshad-xxi@yandex.ru>
+Date:   Thu May 5 22:47:02 2022 +0300
+
+    добавил все состояния и дым
+
+[33mcommit 7cb1f82feec1fed765360b0e1b682c42078ad013[m
+Author: ResGul <reshad-xxi@yandex.ru>
+Date:   Thu May 5 14:29:14 2022 +0300
+
+    связал больше стейтов
+
+[33mcommit 1cf6b1a0379b1173a40e855b79b6392bceb609c5[m
+Author: ResGul <reshad-xxi@yandex.ru>
+Date:   Thu May 5 02:16:29 2022 +0300
+
+    добавил анимацию вращения
+
+[33mcommit b6d88b74d6b5a6e2597037203a4b4b84b9be787d[m
+Author: ResGul <reshad-xxi@yandex.ru>
+Date:   Thu May 5 01:11:28 2022 +0300
+
+    сделал состояние торможения задом и передом (бонусом занос)
+
+[33mcommit 56b9dbe2272e3d05b8694e7d324fc2ca783deffb[m
+Author: ResGul <reshad-xxi@yandex.ru>
+Date:   Wed May 4 22:09:06 2022 +0300
+
+    движение вектором работает
+
+[33mcommit 07ea372013e5fb52957e5f10e75245ae7f2c69f8[m
+Author: ResGul <reshad-xxi@yandex.ru>
+Date:   Wed May 4 21:26:20 2022 +0300
+
+    придумал как двигаться
+
+[33mcommit a75b1db671a25d7b2b977ae65384aac3cf7ca31c[m
+Author: ResGul <reshad-xxi@yandex.ru>
+Date:   Tue May 3 22:35:44 2022 +0300
+
+    разобрался с костяком состояний
+
+[33mcommit ff26110889e60405e822e2f4bb76760206c5b7e3[m
+Author: ResGul <reshad-xxi@yandex.ru>
+Date:   Mon May 2 23:04:34 2022 +0300
+
+    пробую через canvas и стэйт
+
+[33mcommit 3bfb18eae15b8c6ab7dd8da6f03d60deabb1af6f[m
+Author: ResGul <reshad-xxi@yandex.ru>
+Date:   Mon May 2 13:07:14 2022 +0300
+
+    пробую через canvas. В update задаю точку в которую надо прийти и модификатор скорости, но как это сделать через отдельную функцию и как её запихнуть потом
