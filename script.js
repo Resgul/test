@@ -1,10 +1,12 @@
 import * as THREE from './lib/three.module.js'
+import { GLTFLoader } from './lib/GLTFLoader.js'
 import Player from './player.js';
 import InputHandler from './input.js';
+
 // import {drawStatusText} from './utils.js';
 
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
   loader.remove();
   
   const sizes = {
@@ -40,8 +42,31 @@ window.addEventListener('load', () => {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 
+  //загрузка танка
+  let tank;
+
+  const gltfLoader = new GLTFLoader();
+
+  const tankLoad = new Promise(resolve => {
+    gltfLoader.load('./assets/gltf/tank.glb',
+    (gltf)=>{
+      tank = gltf.scene.children[0];
+      tank.scale.set(0.2,0.2,0.2);
+      tank.castShadow = true;
+      // scene.add(gltf.scene.children[0])
+      resolve(tank)
+    })
+  })
+
+
+  
+
+
   const geometry = new THREE.BoxGeometry(1,1,1);
   const material = new THREE.MeshStandardMaterial({color: 'cyan'});
+
+
+
   const box = new THREE.Mesh(geometry, material);
   box.castShadow = true;
 
@@ -56,33 +81,50 @@ window.addEventListener('load', () => {
   scene.add(ground)
 
 
-  camera.lookAt(box.position)
-
-  scene.add(camera, light, hemisphereLight, box);
-
   
-  const player = new Player(sizes.width, sizes.height, box);
+
+  // промис после загрузки модели танка
+  const playerAndTankLoaded = tankLoad.then(tank => {
+    return new Promise(resolve => {
+      scene.add(camera, light, hemisphereLight, tank);
+      camera.lookAt(tank.position);
+      const player = new Player(sizes.width, sizes.height, tank);
+      resolve({player,tank})
+    })
+  })
+
+
+  // camera.lookAt(box.position)
+
+  // scene.add(camera, light, hemisphereLight, box);
+
+
   const input = new InputHandler();
   const clock = new THREE.Clock();
   let time = 0;
   let timer = 0;
   const FPS_60 = 0.01666;
 
-  function animate() {
+  playerAndTankLoaded.then(playerAndTankObject => {
+    function animate() {
+    
+    const tank = playerAndTankObject.tank
+    const player = playerAndTankObject.player
+
 
     const elapsedTime = clock.getElapsedTime();
     const dt = elapsedTime - time;
     time = elapsedTime;
     
-    
+    tank.position.y = Math.abs(Math.sin(elapsedTime))*0.1
     player.update(input.lastKey);
 
     //слежение камеры игроком
-    camera.lookAt(box.position)
+    camera.lookAt(tank.position)
     
     //сохранение камеры за спиной игрока
-    camera.position.x = (box.position.x + Math.cos(box.rotation.y) * -3);
-    camera.position.z = (box.position.z + Math.sin(-box.rotation.y) * -3);
+    camera.position.x = (tank.position.x + Math.cos(tank.rotation.y) * -3)+0.5;
+    camera.position.z = (tank.position.z + Math.sin(-tank.rotation.y) * -3);
     camera.position.y = 1.5
 
 
@@ -119,7 +161,7 @@ window.addEventListener('load', () => {
     requestAnimationFrame(animate);
   }
   animate()
-  
+  })
   
   
   

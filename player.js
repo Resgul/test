@@ -41,7 +41,7 @@ export default class Player {
     //вектор движения 3D
     this.angleDeg += this.angleStep;
     const angle = this.angleDeg * Math.PI / 180;
-    this.mesh.position.y = -0.5;
+    // this.mesh.position.y = -0.5;
     this.mesh.position.x = (this.mesh.position.x + Math.cos(angle) * this.speed);
     this.mesh.position.z = (this.mesh.position.z + Math.sin(angle) * this.speed);
     
